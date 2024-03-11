@@ -11,3 +11,5 @@ CREATE TABLE songs (
  time TEXT,
  is_favorite BOOLEAN
 );
+
+\d songs;
