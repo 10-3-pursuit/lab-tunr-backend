@@ -8,7 +8,7 @@ app.use(express.json());
 
 // ROUTES
 app.get("/", (req, res) => {
-  res.send("Welcome to Bookmarks App");
+  res.send("Welcome to Turn App");
 });
 
 // 404 PAGE
