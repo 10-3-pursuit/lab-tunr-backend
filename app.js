@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 // controller imports
 
-const songsController = require("./controllers/songController");
+const songsController = require("./controllers/songController.js");
 
 app.use(cors());
 app.use(express.json());

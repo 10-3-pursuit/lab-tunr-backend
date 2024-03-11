@@ -1,4 +1,5 @@
 const pgp = require('pg-promise')() // importing pg promise and calling fx immediately
+require('dotenv').config();
 
 // cn is for connect
 const cn = {

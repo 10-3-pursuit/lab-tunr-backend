@@ -1,7 +1,5 @@
 # pg-promise
 
-Absolutely! Let's break it down step by step:
-
 1. **What is `pg-promise`?**
    
    `pg-promise` is like a helper tool for JavaScript programs running on Node.js that makes it easier to talk to a special kind of database called PostgreSQL. Imagine you have a friend who speaks a different language, and you have a translator to help you communicate with them. `pg-promise` is like that translator, helping your program understand and talk to the PostgreSQL database.
@@ -48,6 +46,8 @@ Overall, this code sets up a connection to a PostgreSQL database using `pg-promi
 
 # What is a promise?
 
+See: https://javascript.info/async-await
+
 In JavaScript, a promise is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value. Promises are widely used for handling asynchronous operations such as fetching data from a server, reading files, or executing long-running tasks without blocking the execution thread.
 
 Here's a breakdown of the key concepts related to promises and async/await:
@@ -77,7 +77,7 @@ const db = require('../db/dbConfig');
 
 const getAllSongs = async () => {
     try {
-        const allSongs = await db.any('SELECT * FROM bookmarks')
+        const allSongs = await db.any('SELECT * FROM songs')
         return allSongs;
     } catch (error) {
         return error
