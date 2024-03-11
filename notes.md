@@ -45,3 +45,50 @@ In this context, the code you provided is setting up a connection to a PostgreSQ
    - If there's an error during the connection process, it catches the error and logs a message indicating the connection error.
 
 Overall, this code sets up a connection to a PostgreSQL database using `pg-promise`, retrieves connection details from environment variables, establishes the connection, and logs information about the connection status.
+
+# What is a promise?
+
+In JavaScript, a promise is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value. Promises are widely used for handling asynchronous operations such as fetching data from a server, reading files, or executing long-running tasks without blocking the execution thread.
+
+Here's a breakdown of the key concepts related to promises and async/await:
+
+1. **Promise**: A promise represents the eventual result of an asynchronous operation. It can be in one of three states: pending, fulfilled, or rejected. Promises provide a cleaner way to work with asynchronous code compared to traditional callback functions.
+
+2. **Async Functions**: An async function is a function declared with the `async` keyword. This keyword allows the function to use the `await` keyword inside it. Async functions always return a promise, and their return values are automatically wrapped in a resolved promise.
+
+3. **Await**: The `await` keyword is used inside async functions to wait for the resolution of a promise. When encountering an `await` expression, the async function pauses its execution until the promise is settled (fulfilled or rejected), and then resumes with the resolved value. This makes asynchronous code look and behave more like synchronous code, improving readability and maintainability.
+
+4. **Error Handling**: Async functions simplify error handling by allowing the use of `try...catch` blocks around `await` expressions. If a promise is rejected within an async function and not caught, it will result in an error being thrown, similar to throwing an error synchronously.
+
+5. **Async Class Methods**: Async functions can also be used within class methods. By declaring a class method as `async`, you can use `await` inside it to handle asynchronous operations gracefully.
+
+6. **Top-Level Await (in Modules)**: In modern browsers and environments that support ECMAScript modules, top-level await is allowed within module files. This allows you to use await at the top level of a module without wrapping it in an async function. However, in non-module environments or older browsers, top-level await is not supported, and you need to wrap the code in an immediately invoked async function.
+
+7. **Promise.all with Async/Await**: Async/await works seamlessly with `Promise.all`, which allows you to wait for multiple promises to resolve concurrently. You can use `await` with `Promise.all` to wait for all promises in an array to settle and then retrieve their results collectively.
+
+In summary, async/await provides a more intuitive and readable way to work with asynchronous code in JavaScript, simplifying error handling and improving code organization compared to traditional promise chains or callback-based approaches.
+
+# Queries
+
+Let's break down key aspects of how the provided code in the `queries/songs.js` file interacts with the setup for PostgreSQL connection and querying:
+
+```js
+const db = require('../db/dbConfig');
+
+const getAllSongs = async () => {
+    try {
+        const allSongs = await db.any('SELECT * FROM bookmarks')
+        return allSongs;
+    } catch (error) {
+        return error
+    }
+};
+
+module.exports = { getAllSongs };
+```
+
+1. **`const db = require('../db/dbConfig');`**:
+   - This line imports the `dbConfig` module from the `../db` directory. Presumably, this module sets up and exports a connected instance of `pg-promise` configured with database connection details.
+
+2. **`await db.any('SELECT * FROM bookmarks')`**:
+   - Here, `db` is used to perform a query on the database. The `any()` method is a function provided by `pg-promise` that allows executing arbitrary SQL queries. In this case, it's executing a simple query to select all records from the `bookmarks` table in the database.
