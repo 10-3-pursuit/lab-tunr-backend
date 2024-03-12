@@ -20,7 +20,11 @@ const checkAlbum = (req, res, next) => {
 
 // fx to validate the length and data type of time
 const checkTime = (req, res, next) => {
-  console.log(req.body.time);
+  if (req.body.time.length < 4 || req.body.time.length > 5) {
+    res.status(400).json({ error: "time must be either 4 or 5 characters" });
+  } else {
+    return next();
+  }
 };
 
 // fx to validate the is_favorite entry (must be a BOOLEAN)
