@@ -1,4 +1,4 @@
-const checkName = (req, res, next) => {
+const checkNameAndArtist = (req, res, next) => {
   if (!req.body.name) {
     res.status(400).json({ error: "Name is required" });
   } else if (!req.body.artist) {
@@ -8,4 +8,4 @@ const checkName = (req, res, next) => {
   }
 };
 
-module.exports = { checkName };
+module.exports = { checkNameAndArtist };
