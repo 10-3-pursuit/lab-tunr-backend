@@ -9,4 +9,13 @@ const getAllSongs = async () => {
     }
 }
 
-module.exports = { getAllSongs }
+const getSong = async (id) => {
+    try {
+        const singleSong = await db.one('SELECT * FROM songs WHERE id=$[id]',{id: id});
+        return singleSong
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = { getAllSongs, getSong }
