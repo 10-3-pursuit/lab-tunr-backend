@@ -12,3 +12,6 @@ CREATE TABLE songs (
  is_favorite BOOLEAN
 );
 
+
+
+
