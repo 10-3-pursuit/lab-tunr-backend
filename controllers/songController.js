@@ -1,9 +1,8 @@
 const express = require("express");
+const songs = express.Router();
 
 // storing the router in an object called songs
 const { getAllSongs } = require("../queries/songs");
-
-const songs = express.Router();
 
 // INDEX
 songs.get("/", async (req, res) => {

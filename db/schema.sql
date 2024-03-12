@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS songs_dev;
-CREATE DATABASE songs_dev;
+DROP DATABASE IF EXISTS tunes;
+CREATE DATABASE tunes;
 
-\c songs_dev;
+\c tunes;
 
 CREATE TABLE songs (
  id SERIAL PRIMARY KEY,

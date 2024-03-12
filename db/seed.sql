@@ -1,5 +1,5 @@
 -- db/seed.sql
-\c songs_dev;
+\c tunes;
 
 INSERT INTO songs (name, artist, album, time, is_favorite) VALUES
 ('raspberry beret', 'Prince and the Revolution', 'Around the World in a Day', '3:42', true),
