@@ -7,6 +7,8 @@ const { getAllSongs, getOneSong, createSong } = require("../queries/songs");
 const {
   checkNameAndArtist,
   checkBoolean,
+  checkAlbum,
+  checkTime,
 } = require("../validations/checkSongs");
 // INDEX
 songs.get("/", async (req, res) => {
@@ -30,13 +32,20 @@ songs.get("/:id", async (req, res) => {
 });
 
 // route to create a song
-songs.post("/", checkNameAndArtist, checkBoolean, async (req, res) => {
-  try {
-    const song = await createSong(req.body);
+songs.post(
+  "/",
+  checkNameAndArtist,
+  checkBoolean,
+  checkAlbum,
+  checkTime,
+  async (req, res) => {
+    try {
+      const song = await createSong(req.body);
 
-    res.json(song);
-  } catch (error) {
-    res.status(400).json({ error });
+      res.json(song);
+    } catch (error) {
+      res.status(400).json({ error });
+    }
   }
-});
+);
 module.exports = songs;
