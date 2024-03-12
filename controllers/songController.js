@@ -4,6 +4,7 @@ const songs = express.Router();
 // storing the router in an object called songs
 const { getAllSongs, getOneSong, createSong } = require("../queries/songs");
 
+const { checkNameAndArtist } = require("../validations/checkSongs");
 // INDEX
 songs.get("/", async (req, res) => {
   const allSongs = await getAllSongs();
@@ -26,7 +27,7 @@ songs.get("/:id", async (req, res) => {
 });
 
 // route to create a song
-songs.post("/", async (req, res) => {
+songs.post("/", checkNameAndArtist, async (req, res) => {
   try {
     const song = await createSong(req.body);
 
