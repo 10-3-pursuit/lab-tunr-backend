@@ -92,3 +92,55 @@ module.exports = { getAllSongs };
 
 2. **`await db.any('SELECT * FROM bookmarks')`**:
    - Here, `db` is used to perform a query on the database. The `any()` method is a function provided by `pg-promise` that allows executing arbitrary SQL queries. In this case, it's executing a simple query to select all records from the `bookmarks` table in the database.
+
+# db.oneOrNone vs db.one
+
+The two `getBookmark` functions appear to be similar, but they use different methods from the `db` object to retrieve data from the database.
+
+1. The first `getBookmark` function uses `db.one()`, which retrieves exactly one row from the database. If no row is found or if more than one row is found, it will throw an error. This means that this function expects there to be exactly one bookmark with the provided `id`. If no bookmark is found, it will return an error object.
+
+2. The second `getBookmark` function uses `db.oneOrNone()`, which retrieves at most one row from the database. If no row is found, it returns `null` instead of throwing an error. This means that this function can handle cases where no bookmark is found with the provided `id` by returning `null`.
+
+So, the main difference lies in how they handle cases where no bookmark is found with the provided `id`. The first function throws an error, while the second function returns `null`. If a bookmark is found, both functions return the bookmark object. 
+
+If you're sure that there will always be a bookmark with the provided `id`, then the functionality of both functions will be effectively the same. However, if there's a possibility of the bookmark not existing, the second function provides a safer approach by not throwing an error in that case.
+
+```js
+const getBookmark = async (id) => {
+  try {
+    const oneBookmark = await db.one('SELECT * FROM bookmarks WHERE id=$1', id); 
+    return oneBookmark;
+  } catch (error) {
+    return error;
+  }
+};
+```
+vs
+
+```js
+const getBookmark = async (id) => {
+  try {
+      const oneBookmark = await db.oneOrNone('SELECT * FROM bookmarks WHERE id=$1', [id]); // db.oneOrNone() expects id to be an array
+      return oneBookmark;
+  } catch (error) {
+      return error;
+  }
+};
+```
+### id vs [id]
+
+The difference between `[id]` and `id` lies in how the parameter is passed to the SQL query.
+
+In the first function:
+```javascript
+const oneBookmark = await db.one('SELECT * FROM bookmarks WHERE id=$1', id);
+```
+The `id` parameter is directly substituted into the SQL query string using the `$1` placeholder. This is a common practice in libraries like `pg-promise`, where query parameters are directly substituted into the query string to prevent SQL injection attacks. 
+
+In the second function:
+```javascript
+const oneBookmark = await db.oneOrNone('SELECT * FROM bookmarks WHERE id=$1', [id]);
+```
+The `id` parameter is passed as an array `[id]`. This is because the `pg-promise` library expects query parameters to be passed as an array, even if there's only one parameter. So, even though there's only one parameter, it's still passed as an array `[id]`.
+
+Both methods are valid and safe from SQL injection, but they just follow different conventions of how query parameters are passed to the SQL query. Ultimately, both versions achieve the same result in this context.
