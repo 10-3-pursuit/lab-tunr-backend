@@ -32,7 +32,7 @@ songs.post('/', checkNameArtist, checkBoolean, async (req, res) => {
 })
 
 // UPDATE 
-songs.put('/:id', async (req, res) => {
+songs.put('/:id', checkNameArtist, checkBoolean, async (req, res) => {
     const {id} = req.params
     if(id){
         const updatedSong = await updateSong(id, req.body)
