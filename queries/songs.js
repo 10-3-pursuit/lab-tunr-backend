@@ -20,11 +20,11 @@ const getSongById = async (id) => {
 };
 
 // create fx
-const addNewSong = async (song) => {
+const addNewSong = async (id, song) => { // forgot to add id, but POST worked either way
     try {
         const newSong = await db.one(
-            'INSERT INTO songs (name, artist, album, time, is_favorite) VALUES($1, $2, $3, $4, $5) RETURNING *',
-            [song.name, song.artist, song.album, song.time, song.is_favorite]
+            'INSERT INTO songs (name, artist, album, time, is_favorite) VALUES($1, $2, $3, $4, $5) WHERE id=$6 RETURNING *',
+            [song.name, song.artist, song.album, song.time, song.is_favorite, id]
         )
         return newSong;
     } catch (error) {
@@ -32,4 +32,17 @@ const addNewSong = async (song) => {
     }
 };
 
-module.exports = { getAllSongs, getSongById, addNewSong };
+// edit
+const updateSong = async (id, song) => {
+    try {
+        const updatedSong = await db.one(
+            "UPDATE songs SET name=$1, artist=$2, album=$3, time=$4, is_favorite=$5 RETURNING *",
+            [song.name, song.artist, song.album, song.time, song.is_favorite, id]
+        );
+        return updatedSong;
+    } catch (error) {
+        return error;
+    }
+};
+
+module.exports = { getAllSongs, getSongById, addNewSong, updateSong };
