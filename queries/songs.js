@@ -21,7 +21,7 @@ const getOneSong = async (id) => {
   }
 };
 
-// to create a song AKA Post request
+// to create a song AKA a POST request
 const createSong = async (song) => {
   try {
     const newSong = await db.one(
@@ -34,4 +34,18 @@ const createSong = async (song) => {
   }
 };
 
-module.exports = { getAllSongs, getOneSong, createSong };
+// UPDATE/EDIT song
+const updateSong = async (id, song) => {
+  const { name, artist, album, time, is_favorite } = song;
+  try {
+    const updatedSong = await db.one(
+      "UPDATE songs SET name=$1, artist=$2, album=$3, time=$4, is_favorite=$5 WHERE id=$6 RETURNING *",
+      [name, artist, album, time, is_favorite, id]
+    );
+    return updateSong;
+  } catch (error) {
+    return "Song not found";
+  }
+};
+
+module.exports = { getAllSongs, getOneSong, createSong, updateSong };
