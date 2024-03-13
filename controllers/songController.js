@@ -1,6 +1,6 @@
 const express = require('express');
 const songs = express.Router();
-const { getAllSongs, getSongById, addNewSong, updateSong } = require("../queries/songs");
+const { getAllSongs, getSongById, addNewSong, updateSong, deleteSong } = require("../queries/songs");
 const { checkSong, checkBoolean, checkID } = require("../validations/checkSong");
 
 songs.get('/', async(req, res) => {
@@ -46,6 +46,16 @@ songs.put('/:id', checkID, checkBoolean, checkSong, async (req, res) => {
         res.status(200).json(updatedSong);
     } else {
         res.status(400).json({ error });
+    }
+});
+
+songs.delete("/:id", checkID, async (req, res) => {
+    const { id } = req.params;
+    const deletedSong = await deleteSong(id);
+    if (deletedSong.id) {
+        res.status(200).json(deletedSong);
+    } else {
+        res.status(404).json("Song not found");
     }
 });
 

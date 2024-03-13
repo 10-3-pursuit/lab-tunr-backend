@@ -46,4 +46,21 @@ const updateSong = async (id, song) => {
     }
 };
 
-module.exports = { getAllSongs, getSongById, addNewSong, updateSong };
+const deleteSong = async (id) => {
+    try {
+        const deletedSong = await db.one(
+            "DELETE FROM songs WHERE id = $1 RETURNING *", id
+        );
+        return deletedSong;
+    } catch (error) {
+        return error;
+    }
+};
+
+module.exports = { 
+    getAllSongs, 
+    getSongById, 
+    addNewSong, 
+    updateSong, 
+    deleteSong 
+};
