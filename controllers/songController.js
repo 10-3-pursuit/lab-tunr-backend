@@ -1,7 +1,7 @@
 const express = require('express');
 const songs = express.Router();
 const { getAllSongs, getSongById, addNewSong, updateSong } = require("../queries/songs");
-const { checkSong, checkBoolean, checkID } = require("../validations/checkSong");
+const { checkSong, checkBoolean } = require("../validations/checkSong");
 
 songs.get('/', async(req, res) => {
     const allSongs = await getAllSongs()
@@ -26,8 +26,9 @@ songs.get('/:id', async (req, res) => {
 });
 
 // add new song (create)
-songs.post('/', checkBoolean, checkSong, async (req, res) => {
+songs.post('/', checkSong, checkBoolean, async (req, res) => {
     try {
+        console.log(req.body);
         const song = await addNewSong(req.body)
         res.json(song)
     } catch (error) {
@@ -36,7 +37,7 @@ songs.post('/', checkBoolean, checkSong, async (req, res) => {
 });
 
 // edit
-songs.put('/:id',checkID, async (req, res) => {
+songs.put('/:id', async (req, res) => {
     const { id } = req.params;
     if (id) {
         // updateSong goes here
