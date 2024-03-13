@@ -59,4 +59,40 @@ const deleteSong = async(id) => {
     }
 }
 
-module.exports = { getAllSongs, getSong, createSong, deleteSong, updateSong }
+// BONUS
+const orderByAsc = async () => {
+    try {
+        const sortedSongs = await db.any('SELECT * FROM songs ORDER BY name ASC')
+        return sortedSongs
+    } catch (error) {
+        return error
+    }    
+}
+
+const orderByDesc = async () => {
+    try {
+        const sortedSongs = await db.any('SELECT * FROM songs ORDER BY name DESC')
+        return sortedSongs
+    } catch (error) {
+        return error
+    } 
+}
+
+const getFavoriteSongs = async () => {
+    try {
+        const favoriteSongs = await db.any('SELECT * FROM songs WHERE is_favorite = true')
+        return favoriteSongs
+    } catch (error) {
+        return error
+    }
+}
+
+const getNotFavoriteSongs = async () => {
+    try {
+        const notFavoriteSongs = await db.any('SELECT * FROM songs WHERE is_favorite = false')
+        return notFavoriteSongs
+    } catch (error) {
+        return error
+    }
+}
+module.exports = { getAllSongs, getSong, createSong, deleteSong, updateSong, orderByAsc, orderByDesc, getFavoriteSongs, getNotFavoriteSongs }
