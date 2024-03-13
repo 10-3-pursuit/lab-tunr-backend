@@ -28,7 +28,7 @@ songs.get('/:id', async (req, res) => {
 // add new song (create)
 songs.post('/', checkSong, checkBoolean, async (req, res) => {
     try {
-        console.log(req.body);
+        console.log(req.body); // new song to be added
         const song = await addNewSong(req.body)
         res.json(song)
     } catch (error) {
@@ -37,13 +37,12 @@ songs.post('/', checkSong, checkBoolean, async (req, res) => {
 });
 
 // edit
-songs.put('/:id', checkID, checkBoolean, checkSong, async (req, res) => {
+songs.put('/:id', checkID, async (req, res) => {
     const { id } = req.params;
     if (id) {
-        // updateSong goes here
-        console.log(req.body);
         const updatedSong = await updateSong(id, req.body);
         res.status(200).json(updatedSong);
+        console.log('song successfully updated');
     } else {
         res.status(400).json({ error });
     }

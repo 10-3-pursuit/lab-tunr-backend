@@ -6,6 +6,7 @@ const checkSong = (req, res, next) => {
     } else if (!req.body.artist) {
         res.status(400).json({ error: "Artist is required" });
     } else {
+        console.log("All necessary fields inputted")
         return next();
     }
 };
@@ -30,6 +31,7 @@ const checkID = (req, res, next) => {
     if(!req.body.id) {
         res.status(400).json({ error: "ID is required" })
     } else {
+        console.log('received required id')
         return next();
     }
 };
