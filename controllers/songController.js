@@ -1,6 +1,7 @@
 const express = require('express');
 const songs = express.Router();
 const { getAllSongs, getSongById } = require("../queries/songs");
+const { checkSongs } = require("../validations/checkSongs")
 
 songs.get('/', async(req, res) => {
     const allSongs = await getAllSongs()
