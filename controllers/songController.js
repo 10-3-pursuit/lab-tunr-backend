@@ -7,6 +7,7 @@ const {
   getOneSong,
   createSong,
   updateSong,
+  deleteSong,
 } = require("../queries/songs");
 
 const {
@@ -71,5 +72,16 @@ songs.put(
     }
   }
 );
+
+// to delete a song
+songs.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedSong = await deleteSong(id);
+  if (deletedSong.id) {
+    res.status(200).json({ message: "song was successfully deleted" });
+  } else {
+    res.status(404).json("Song not found");
+  }
+});
 
 module.exports = songs;
