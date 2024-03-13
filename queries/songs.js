@@ -1,5 +1,6 @@
 const db = require('../db/dbConfig')
 
+// INDEX
 const getAllSongs = async () => {
     try {
         const allSongs = await db.any('SELECT * FROM songs')
@@ -10,6 +11,7 @@ const getAllSongs = async () => {
     }
 }
 
+// SHOW
 const getSong = async (id) => {
     try {
         const oneSong = await db.one('SELECT * FROM songs WHERE id=$1', id)
@@ -19,6 +21,7 @@ const getSong = async (id) => {
     }
 }
 
+// CREATE
 const createSong = async ({ name, album, time, artist, is_favorite }) => {
     try {
         const newSong = await db.one(
@@ -30,6 +33,21 @@ const createSong = async ({ name, album, time, artist, is_favorite }) => {
     }
 }
 
+// UPDATE
+const updateSong = async (id, song) => {
+    const { name, album, time, artist, is_favorite } = song
+    try{
+        const updatedSong = await db.one(
+            'UPDATE songs SET name=$1, album=$2, time=$3, artist=$4, is_favorite=$5 WHERE id=$6 RETURNING *',
+            [name, album, time, artist, is_favorite, id]
+        )
+        return updatedSong
+    } catch(error){
+        return error
+    }
+}
+
+// DELETE
 const deleteSong = async(id) => {
     try {
         const deletedSong = await db.one(
@@ -41,4 +59,4 @@ const deleteSong = async(id) => {
     }
 }
 
-module.exports = { getAllSongs, getSong, createSong, deleteSong }
+module.exports = { getAllSongs, getSong, createSong, deleteSong, updateSong }

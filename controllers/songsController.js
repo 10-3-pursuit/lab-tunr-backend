@@ -1,6 +1,6 @@
 const express = require("express");
 const songs = express.Router();
-const { getAllSongs, getSong, createSong, deleteSong } = require('../queries/songs')
+const { getAllSongs, getSong, createSong, deleteSong, updateSong } = require('../queries/songs')
 const {checkNameArtist, checkBoolean} = require('../validations/checkSongs.js')
 
 // INDEX
@@ -28,6 +28,17 @@ songs.post('/', checkNameArtist, checkBoolean, async (req, res) => {
         res.json(song)
     } catch (error) {
         res.status(400).json({ error: 'Song creation failed.'})
+    }
+})
+
+// UPDATE 
+songs.put('/:id', async (req, res) => {
+    const {id} = req.params
+    if(id){
+        const updatedSong = await updateSong(id, req.body)
+        res.status(200).json(updatedSong) 
+    } else {
+        res.status(400).json({ error })
     }
 })
 
