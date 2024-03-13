@@ -16,14 +16,10 @@ songs.get('/', async (req, res) => {
         if(order){
             if(order === "asc"){
                 const orderedAsc = await orderByAsc()
-                if (orderedAsc[0]){
-                    res.status(200).json(orderedAsc)
-                }
+                if (orderedAsc[0]) res.status(200).json(orderedAsc)
             } else if(order === "desc"){
                 const orderedDesc = await orderByDesc()
-                if (orderedDesc[0]){
-                    res.status(200).json(orderedDesc)
-                }
+                if (orderedDesc[0]) res.status(200).json(orderedDesc)
             }
         } else if(is_favorite){
             if(is_favorite === true || is_favorite === "true"){
@@ -31,15 +27,11 @@ songs.get('/', async (req, res) => {
                 if(favoriteSongs[0])res.status(200).json(favoriteSongs)
             } else if(is_favorite === false || is_favorite === "false"){
                 const notFavoriteSongs = await getNotFavoriteSongs()
-                if(notFavoriteSongs[0]){
-                    res.status(200).json(notFavoriteSongs)
-                }
+                if(notFavoriteSongs[0]) res.status(200).json(notFavoriteSongs)
             }
         } else {
             const allSongs = await getAllSongs()
-            if (allSongs[0]){
-                res.status(200).json(allSongs)
-            } 
+            if (allSongs[0]) res.status(200).json(allSongs)
         }
     } catch (error) {
         res.status(500).json({ error: "server error" })
