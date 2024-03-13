@@ -25,17 +25,17 @@ const checkBoolean = (req, res, next) => {
     }
 };
 
-// to validate edit fx
-// const checkID = (req, res, next) => {
-//     if(!req.body.id) {
-//         res.status(400).json({ error: "ID is required" })
-//     } else {
-//         return next();
-//     }
-// };
+//to validate edit fx
+const checkID = (req, res, next) => {
+    if(!req.body.id) {
+        res.status(400).json({ error: "ID is required" })
+    } else {
+        return next();
+    }
+};
 
 module.exports = {
     checkSong,
     checkBoolean,
-    // checkID
+    checkID
 };
