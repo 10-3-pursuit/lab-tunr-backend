@@ -19,10 +19,17 @@ const getSongById = async (id) => {
     }
 };
 
-/*
-- using the db.oneOrNone method instead of db.any. This method will return either one row (if a song with the specified ID is found) or null (if no song is found).
-- using a parameterized query with a WHERE clause to filter by the song's ID (id = $1). The $1 placeholder will be replaced by the actual value of the id parameter passed to the function.
-- passing the id as a parameter to the query function. This helps prevent SQL injection attacks and ensures the query is executed safely.
-*/
+// create fx
+const addNewSong = async (song) => {
+    try {
+        const newSong = await db.one(
+            'INSERT INTO songs (name, artist, album, time, is_favorite) VALUES($1, $2, $3, $4, $5) RETURNING *',
+            [song.name, song.artist, song.album, song.time, song.is_favorite]
+        )
+        return newSong;
+    } catch (error) {
+        return error;
+    }
+};
 
-module.exports = { getAllSongs, getSongById };
+module.exports = { getAllSongs, getSongById, addNewSong };
