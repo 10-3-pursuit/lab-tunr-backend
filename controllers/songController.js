@@ -1,7 +1,7 @@
 const express = require('express');
 const songs = express.Router();
 const { getAllSongs, getSongById, addNewSong } = require("../queries/songs");
-const { checkSong } = require("../validations/checkSong")
+const { checkSong, checkBoolean } = require("../validations/checkSong");
 
 songs.get('/', async(req, res) => {
     const allSongs = await getAllSongs()
@@ -26,12 +26,13 @@ songs.get('/:id', async (req, res) => {
 });
 
 // add new song (create)
-bookmarks.post('/', checkSong, async (req, res) => {
+bookmarks.post('/', checkBoolean, checkSong, async (req, res) => {
     try {
-
+        const song = await addNewSong(req.body)
+        res.json(song)
     } catch (error) {
-        
+        res.status(400).json({ error: error })
     }
-})
+});
 
 module.exports = songs;
