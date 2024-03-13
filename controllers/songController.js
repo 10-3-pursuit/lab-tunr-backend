@@ -26,13 +26,16 @@ songs.get('/:id', async (req, res) => {
 });
 
 // add new song (create)
-bookmarks.post('/', checkBoolean, checkSong, async (req, res) => {
+songs.post('/', checkBoolean, checkSong, async (req, res) => {
     try {
         const song = await addNewSong(req.body)
         res.json(song)
     } catch (error) {
-        res.status(400).json({ error: error })
+        res.status(400).json({ error })
     }
 });
+
+// edit
+
 
 module.exports = songs;
