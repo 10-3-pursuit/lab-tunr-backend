@@ -2,7 +2,12 @@ const express = require("express");
 const songs = express.Router();
 
 // storing the router in an object called songs
-const { getAllSongs, getOneSong, createSong } = require("../queries/songs");
+const {
+  getAllSongs,
+  getOneSong,
+  createSong,
+  updateSong,
+} = require("../queries/songs");
 
 const {
   checkNameAndArtist,
@@ -48,4 +53,23 @@ songs.post(
     }
   }
 );
+
+//to update/edit a song
+songs.put(
+  "/:id",
+  checkNameAndArtist,
+  checkBoolean,
+  checkAlbum,
+  checkTime,
+  async (req, res) => {
+    const { id } = req.params;
+    if (id) {
+      const updatedSong = await updateSong(id, req.body);
+      res.status(200).json(updatedSong);
+    } else {
+      res.status(400).json("Song not found");
+    }
+  }
+);
+
 module.exports = songs;
