@@ -23,6 +23,18 @@ const getAllSongsAscOrder = async () => {
   }
 };
 
+// to get all songs in descending order
+const getAllSongsDescOrder = async () => {
+  try {
+    const allSongsDescOrder = await db.any(
+      "SELECT * FROM songs ORDER BY name DESC"
+    );
+    return allSongsDescOrder;
+  } catch (error) {
+    return error;
+  }
+};
+
 // to get ONE song
 const getOneSong = async (id) => {
   try {
