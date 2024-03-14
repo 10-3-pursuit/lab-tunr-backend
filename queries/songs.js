@@ -11,6 +11,18 @@ const getAllSongs = async () => {
   }
 };
 
+// to get all songs in ascending order
+const getAllSongsAscOrder = async () => {
+  try {
+    const allSongsAscOrder = await db.any(
+      "SELECT * FROM songs ORDER BY name ASC"
+    );
+    return allSongsAscOrder;
+  } catch (error) {
+    return error;
+  }
+};
+
 // to get ONE song
 const getOneSong = async (id) => {
   try {
@@ -67,4 +79,6 @@ module.exports = {
   createSong,
   updateSong,
   deleteSong,
+  getAllSongsAscOrder,
+  getAllSongsDescOrder,
 };
