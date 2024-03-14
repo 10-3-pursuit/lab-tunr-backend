@@ -8,10 +8,6 @@ const {
   createSong,
   updateSong,
   deleteSong,
-  getAllSongsAscOrder,
-  getAllSongsDescOrder,
-  getFavoriteSongs,
-  getNonFavoriteSongs,
 } = require("../queries/songs");
 
 const {
@@ -23,52 +19,28 @@ const {
 
 // INDEX
 songs.get("/", async (req, res) => {
-  const allSongs = await getAllSongs();
-  if (allSongs[0]) {
+  try {
+    let query = "SELECT * FROM songs";
+    const { order, is_favorite } = req.query;
+
+    // Handle sorting
+    if (order) {
+      query +=
+        order.toLowerCase() === "asc"
+          ? " ORDER BY name ASC"
+          : " ORDER BY name DESC";
+    }
+
+    // Filter by is_favorite
+    if (is_favorite !== undefined) {
+      const isFavorite = is_favorite === "true";
+      query += ` WHERE is_favorite = ${isFavorite}`;
+    }
+
+    const allSongs = await getAllSongs(); // Using function from queries/songs.js
     res.status(200).json(allSongs);
-  } else {
-    res.status(500).json({ error: "server error" });
-  }
-});
-
-// INDEX in ascending order
-songs.get("/asc", async (req, res) => {
-  const allSongsAscOrder = await getAllSongsAscOrder();
-  if (allSongsAscOrder[0]) {
-    res.status(200).json(allSongsAscOrder);
-  } else {
-    res.status(500).json({ error: "server error" });
-  }
-});
-
-// INDEX in descending order
-songs.get("/desc", async (req, res) => {
-  const allSongsDescOrder = await getAllSongsDescOrder();
-  if (allSongsDescOrder[0]) {
-    res.status(200).json(allSongsDescOrder);
-  } else {
-    res.status(500).json({ error: "server error" });
-  }
-});
-
-// INDEX filtered by is_favorite
-songs.get("/favorites", async (req, res) => {
-  const { is_favorite } = req.query;
-  try {
-    const favoriteSongs = await getFavoriteSongs(is_favorite);
-    res.status(200).json(favoriteSongs);
   } catch (error) {
-    res.status(500).json({ error: "server error" });
-  }
-});
-
-// INDEX filtered by non-favorites
-songs.get("/nonfavorites", async (req, res) => {
-  const { is_favorite } = req.query;
-  try {
-    const nonFavoriteSongs = await getNonFavoriteSongs(!is_favorite);
-    res.status(200).json(nonFavoriteSongs);
-  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "server error" });
   }
 });
