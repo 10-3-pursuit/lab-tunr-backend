@@ -29,11 +29,21 @@ songs.get("/", async (req, res) => {
   }
 });
 
-// INDEX with ascending order
+// INDEX in ascending order
 songs.get("/asc", async (req, res) => {
   const allSongsAscOrder = await getAllSongsAscOrder();
   if (allSongsAscOrder[0]) {
     res.status(200).json(allSongsAscOrder);
+  } else {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+// INDEX in descending order
+songs.get("/desc", async (req, res) => {
+  const allSongsDescOrder = await getAllSongsDescOrder();
+  if (allSongsDescOrder[0]) {
+    res.status(200).json(allSongsDescOrder);
   } else {
     res.status(500).json({ error: "server error" });
   }
