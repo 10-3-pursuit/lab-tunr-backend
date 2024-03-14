@@ -35,6 +35,19 @@ const getAllSongsDescOrder = async () => {
   }
 };
 
+// to get filtered songs based on is_favorite
+const getFilteredSongs = async (isFavorite) => {
+  try {
+    const filteredSongs = await db.any(
+      "SELECT * FROM songs WHERE is_favorite = $1",
+      [isFavorite]
+    );
+    return filteredSongs;
+  } catch (error) {
+    return error;
+  }
+};
+
 // to get ONE song
 const getOneSong = async (id) => {
   try {
@@ -93,4 +106,5 @@ module.exports = {
   deleteSong,
   getAllSongsAscOrder,
   getAllSongsDescOrder,
+  getFilteredSongs,
 };
