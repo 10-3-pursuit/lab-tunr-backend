@@ -10,6 +10,8 @@ const {
   deleteSong,
   getAllSongsAscOrder,
   getAllSongsDescOrder,
+  getFavoriteSongs,
+  getNonFavoriteSongs,
 } = require("../queries/songs");
 
 const {
@@ -45,6 +47,28 @@ songs.get("/desc", async (req, res) => {
   if (allSongsDescOrder[0]) {
     res.status(200).json(allSongsDescOrder);
   } else {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+// INDEX filtered by is_favorite
+songs.get("/favorites", async (req, res) => {
+  const { is_favorite } = req.query;
+  try {
+    const favoriteSongs = await getFavoriteSongs(is_favorite);
+    res.status(200).json(favoriteSongs);
+  } catch (error) {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+// INDEX filtered by non-favorites
+songs.get("/nonfavorites", async (req, res) => {
+  const { is_favorite } = req.query;
+  try {
+    const nonFavoriteSongs = await getNonFavoriteSongs(!is_favorite);
+    res.status(200).json(nonFavoriteSongs);
+  } catch (error) {
     res.status(500).json({ error: "server error" });
   }
 });

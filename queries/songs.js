@@ -36,13 +36,25 @@ const getAllSongsDescOrder = async () => {
 };
 
 // to get filtered songs based on is_favorite
-const getFilteredSongs = async (isFavorite) => {
+const getFavoriteSongs = async (is_Favorite) => {
   try {
-    const filteredSongs = await db.any(
-      "SELECT * FROM songs WHERE is_favorite = $1",
-      [isFavorite]
+    const favoriteSongs = await db.any(
+      "SELECT * FROM songs WHERE is_favorite = true",
+      is_Favorite
     );
-    return filteredSongs;
+    return favoriteSongs;
+  } catch (error) {
+    return error;
+  }
+};
+// to get filtered songs based on is_favorite
+const getNonFavoriteSongs = async (is_Favorite) => {
+  try {
+    const nonFavoriteSongs = await db.any(
+      "SELECT * FROM songs WHERE is_favorite = false",
+      is_Favorite
+    );
+    return nonFavoriteSongs;
   } catch (error) {
     return error;
   }
@@ -106,5 +118,6 @@ module.exports = {
   deleteSong,
   getAllSongsAscOrder,
   getAllSongsDescOrder,
-  getFilteredSongs,
+  getFavoriteSongs,
+  getNonFavoriteSongs,
 };
