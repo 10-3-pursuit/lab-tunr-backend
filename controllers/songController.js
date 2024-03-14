@@ -8,6 +8,8 @@ const {
   createSong,
   updateSong,
   deleteSong,
+  getAllSongsAscOrder,
+  getAllSongsDescOrder,
 } = require("../queries/songs");
 
 const {
@@ -16,11 +18,22 @@ const {
   checkAlbum,
   checkTime,
 } = require("../validations/checkSongs");
+
 // INDEX
 songs.get("/", async (req, res) => {
   const allSongs = await getAllSongs();
   if (allSongs[0]) {
     res.status(200).json(allSongs);
+  } else {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+// INDEX with ascending order
+songs.get("/asc", async (req, res) => {
+  const allSongsAscOrder = await getAllSongsAscOrder();
+  if (allSongsAscOrder[0]) {
+    res.status(200).json(allSongsAscOrder);
   } else {
     res.status(500).json({ error: "server error" });
   }
