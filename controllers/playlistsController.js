@@ -60,6 +60,7 @@ playlists.post('/', async (req, res) => {
     res.status(200).json(playlist)
   })
 
+
 // DELETE
 playlists.delete("/:id", async (req, res) => {
   const { id } = req.params;

@@ -21,4 +21,9 @@ VALUES
 ('Viva la Vida', 'Viva la Vida or Death and All His Friends', '03:45', 'Coldplay', TRUE, 1),
 ('Roar', 'Prism', '03:42', 'Katy Perry', TRUE, 2),
 ('Say Something', 'Is There Anybody Out There?', '03:53', 'A Great Big World ft. Christina Aguilera', FALSE, 3),
-('All of Me', 'Love in the Future', '04:29', 'John Legend', TRUE, 1);
+('All of Me', 'Love in the Future', '04:29', 'John Legend', FALSE, 1),
+('Bohemian Rhapsody', 'A Night at the Opera', '05:55', 'Queen', TRUE, null),
+('Hotel California', 'Hotel California', '06:30', 'Eagles', FALSE, null),
+('Stairway to Heaven', 'Led Zeppelin IV', '08:02', 'Led Zeppelin', TRUE, null),
+('Imagine', 'Imagine', '03:03', 'John Lennon', TRUE, null),
+('Hey Jude', 'Hey Jude', '07:11', 'The Beatles', FALSE, null);
