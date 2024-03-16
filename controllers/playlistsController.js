@@ -3,8 +3,6 @@ const express = require("express");
 const playlists = express.Router();
 const { getAllPlaylistSongs } = require('../queries/songs.js')
 
-const songsController = require('./songsController')
-
 // Queries
 const {
     getAllPlaylists,
@@ -13,8 +11,6 @@ const {
     deletePlaylist,
     updatePlaylist,
   } = require("../queries/playlists");
-
-//   playlists.use('/:playlist_id/songs', songsController)
 
   // INDEX
 playlists.get('/', async (req, res) => {
@@ -48,7 +44,7 @@ playlists.get('/:id', async (req, res) => {
 playlists.put('/:id', async (req, res) => {
     const { id } = req.params
     // console.log(id, req.params.bookmark_id)
-    const updatedPlaylist = await updatePlaylist(id, req.body)
+    const updatedPlaylist = await updatePlaylist({id, ...req.body})
     if (updatedPlaylist.id) {
       res.status(200).json(updatedPlaylist)
     } else {

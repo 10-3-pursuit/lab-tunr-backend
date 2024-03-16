@@ -96,7 +96,7 @@ const getNotFavoriteSongs = async () => {
     }
 }
 
-// PLAYLIST QUERIES
+// PLAYLIST SONGS QUERIES
 const getAllPlaylistSongs = async (id) => {
     try {
         const matchingSongs = await db.any('SELECT * FROM songs WHERE playlist_id=$1', id)
