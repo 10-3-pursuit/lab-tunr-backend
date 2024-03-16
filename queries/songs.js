@@ -95,6 +95,17 @@ const getNotFavoriteSongs = async () => {
         return error
     }
 }
+
+// PLAYLIST QUERIES
+const getAllPlaylistSongs = async (id) => {
+    try {
+        const matchingSongs = await db.any('SELECT * FROM songs WHERE playlist_id=$1', id)
+        return matchingSongs
+    } catch (err) {
+      return err
+    }
+}
+
 module.exports = { 
     getAllSongs, 
     getSong, 
@@ -104,5 +115,6 @@ module.exports = {
     orderByAsc, 
     orderByDesc, 
     getFavoriteSongs, 
-    getNotFavoriteSongs 
+    getNotFavoriteSongs,
+    getAllPlaylistSongs
 }

@@ -1,6 +1,9 @@
 const express = require("express");
 // const { getSong } = require('../queries/bookmarks.js')
 const playlists = express.Router();
+const { getAllPlaylistSongs } = require('../queries/songs.js')
+
+const songsController = require('./songsController')
 
 // Queries
 const {
@@ -11,14 +14,18 @@ const {
     updatePlaylist,
   } = require("../queries/playlists");
 
+//   playlists.use('/:playlist_id/songs', songsController)
+
   // INDEX
 playlists.get('/', async (req, res) => {
-    // const { bookmark_id } = req.params
-    const allPlaylists = await getAllPlaylists()
-    // const bookmark = await getBookmark(bookmark_id)
+    // const { playlist_id } = req.params
+    // const  playlistSongs = await getAllPlaylistSongs(playlist_id)
+    // const playlist = await getPlaylist(playlist_id)
+    const allPlaylists  = await getAllPlaylists()
     if (allPlaylists[0]) {
-      res.status(200).json(allPlaylists)
-    // console.log("INDEX controller route", allPlaylists)
+    //   res.status(200).json([{ ...playlist, playlistSongs}])
+    res.status(200).json(allPlaylists)
+    // console.log("INDEX controller route", playlist)
     } else {
       res.status(500).json({ error: 'server error' })
     }
@@ -28,9 +35,9 @@ playlists.get('/', async (req, res) => {
 playlists.get('/:id', async (req, res) => {
     const { id } = req.params
     const playlist = await getPlaylist(id)
-    // const bookmark = await getBookmark(bookmark_id)
+    const playlistSongs = await getAllPlaylistSongs(id)
     if (playlist) {
-      res.json(playlist)
+      res.json({ ...playlist, playlistSongs })
     } else {
       res.status(404).json({ error: 'playlist not found' })
     }
