@@ -106,6 +106,16 @@ const getAllPlaylistSongs = async (id) => {
     }
 }
 
+const updateSongsPlaylistIdToNull = async (playlist_id) => {
+    try {
+        await db.none('UPDATE songs SET playlist_id = NULL WHERE playlist_id = $1', playlist_id);
+        return true; // Return true to indicate successful update
+    } catch (error) {
+        return false; // Return false if update fails
+    }
+};
+
+
 module.exports = { 
     getAllSongs, 
     getSong, 
@@ -116,5 +126,6 @@ module.exports = {
     orderByDesc, 
     getFavoriteSongs, 
     getNotFavoriteSongs,
-    getAllPlaylistSongs
+    getAllPlaylistSongs,
+    updateSongsPlaylistIdToNull
 }

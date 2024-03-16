@@ -1,7 +1,6 @@
 const express = require("express");
-// const { getSong } = require('../queries/bookmarks.js')
 const playlists = express.Router();
-const { getAllPlaylistSongs } = require('../queries/songs.js')
+const { getAllPlaylistSongs, updateSongsPlaylistIdToNull } = require('../queries/songs.js')
 
 // Queries
 const {
@@ -66,7 +65,13 @@ playlists.delete("/:id", async (req, res) => {
   const { id } = req.params;
   const deletedPlaylist = await deletePlaylist(id);
   if (deletedPlaylist.id) {
-    res.status(200).json(deletedPlaylist);
+    //  update the playlist_id to NULL for songs associated with the deleted playlist.
+    const updateSuccess = await updateSongsPlaylistIdToNull(id);
+    if(updateSuccess){
+        res.status(200).json(deletedPlaylist)
+    } else {
+        res.status(500).json({ error: "Failed to update songs' playlist_id" })
+    }
   } else {
     res.status(404).json({ error: "Playlist not found" });
   }
