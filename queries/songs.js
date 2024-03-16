@@ -95,4 +95,14 @@ const getNotFavoriteSongs = async () => {
         return error
     }
 }
-module.exports = { getAllSongs, getSong, createSong, deleteSong, updateSong, orderByAsc, orderByDesc, getFavoriteSongs, getNotFavoriteSongs }
+module.exports = { 
+    getAllSongs, 
+    getSong, 
+    createSong, 
+    deleteSong, 
+    updateSong, 
+    orderByAsc, 
+    orderByDesc, 
+    getFavoriteSongs, 
+    getNotFavoriteSongs 
+}

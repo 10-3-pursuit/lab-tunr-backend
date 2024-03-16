@@ -1,7 +1,22 @@
 const express = require("express");
-const songs = express.Router();
-const { getAllSongs, getSong, createSong, deleteSong, updateSong, orderByAsc, orderByDesc, getFavoriteSongs, getNotFavoriteSongs } = require('../queries/songs')
-const {checkNameArtist, checkBoolean} = require('../validations/checkSongs.js')
+// const songs = express.Router();
+const songs = express.Router({ mergeParams: true });
+const { 
+    getAllSongs, 
+    getSong, 
+    createSong, 
+    deleteSong, 
+    updateSong, 
+    orderByAsc, 
+    orderByDesc, 
+    getFavoriteSongs, 
+    getNotFavoriteSongs 
+} = require('../queries/songs')
+const {
+    checkNameArtist, 
+    checkBoolean
+} = require('../validations/checkSongs.js')
+
 
 // INDEX
 // songs.get('/', async (req, res) => {
@@ -80,9 +95,5 @@ songs.delete('/:id', async (req, res) => {
         res.status(404).json('Song not found.')
     }
 })
-
-// BONUS
-
-
 
 module.exports = songs;
