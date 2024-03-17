@@ -13,16 +13,17 @@ const {
 
   // INDEX
 playlists.get('/', async (req, res) => {
-    // const { playlist_id } = req.params
-    // const  playlistSongs = await getAllPlaylistSongs(playlist_id)
-    // const playlist = await getPlaylist(playlist_id)
+    const allPlaylistsWithSongs = []
     const allPlaylists  = await getAllPlaylists()
-    if (allPlaylists[0]) {
-    //   res.status(200).json([{ ...playlist, playlistSongs}])
-    res.status(200).json(allPlaylists)
-    // console.log("INDEX controller route", playlist)
+
+    for(let playlist of allPlaylists){
+        const songs = await getAllPlaylistSongs(playlist.id)
+        allPlaylistsWithSongs.push({ ...playlist, songs })
+    }
+    if (allPlaylistsWithSongs[0]) {
+        res.status(200).json(allPlaylistsWithSongs)
     } else {
-      res.status(500).json({ error: 'server error' })
+        res.status(500).json({ error: 'server error' })
     }
   })
 
