@@ -1,11 +1,10 @@
 const db = require('../db/dbConfig')
 
 // INDEX
-const getAllSongs = async () => {
+const getAllSongs = async (playlist_id) => {
     try {
-        const allSongs = await db.any('SELECT * FROM songs')
-        // console.log(allSongs)
-        return allSongs
+        const songs = await db.any('SELECT * FROM songs WHERE playlist_id=$1', id)
+        return songs
     } catch (error) {
         return error
     }
@@ -115,6 +114,15 @@ const updateSongsPlaylistIdToNull = async (playlist_id) => {
     }
 };
 
+// const updatePlaylistSong = async (song_id) => {
+//     try{
+//         await db.none('UPDATE songs SET playlist_id = NULL WHERE id = $1', song_id)
+//         return true
+//     } catch (error) {
+//         return false
+//     }
+// }
+
 
 module.exports = { 
     getAllSongs, 
@@ -127,5 +135,6 @@ module.exports = {
     getFavoriteSongs, 
     getNotFavoriteSongs,
     getAllPlaylistSongs,
-    updateSongsPlaylistIdToNull
+    updateSongsPlaylistIdToNull, 
+    // updatePlaylistSong
 }

@@ -38,7 +38,7 @@ const updatePlaylist = async (playlist) => {
 };
 
 // CREATE
-const newPlaylist = async (playlist) => {
+const createPlaylist = async (playlist) => {
   try {
     const newPlaylist = await db.one(
       "INSERT INTO playlists (name, description) VALUES($1, $2) RETURNING *",
@@ -69,6 +69,6 @@ module.exports = {
     getAllPlaylists, 
     getPlaylist, 
     updatePlaylist, 
-    newPlaylist, 
+    createPlaylist, 
     deletePlaylist
 };

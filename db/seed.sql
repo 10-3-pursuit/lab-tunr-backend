@@ -10,20 +10,15 @@ VALUES
 INSERT INTO songs 
 (name, album, time, artist, is_favorite, playlist_id) 
 VALUES
-('Halo', 'I Am... Sasha Fierce', '04:21', 'Beyoncé', TRUE, 1),
-('Uptown Funk', 'Uptown Special', '04:30', 'Mark Ronson ft. Bruno Mars', FALSE, 2),
+('Halo', 'I Am... Sasha Fierce', '4:21', 'Beyoncé', TRUE, 1),
+('Uptown Funk', 'Uptown Special', '4:30', 'Mark Ronson ft. Bruno Mars', FALSE, 2),
 ('Shake It Off', '1989', '03:39', 'Taylor Swift', TRUE, 1),
-('Radioactive', 'Night Visions', '03:08', 'Imagine Dragons', TRUE, 3),
+('Radioactive', 'Night Visions', '3:08', 'Imagine Dragons', TRUE, 3),
 ('Believer', 'Evolve', '03:24', 'Imagine Dragons', FALSE, 2),
-('Counting Stars', 'Native', '04:17', 'OneRepublic', TRUE, 1),
-('Shape of My Heart', 'Ten Summoners Tales', '04:38', 'Sting', TRUE, 3),
-('Take Me to Church', 'Take Me to Church', '04:02', 'Hozier', FALSE, 2),
-('Viva la Vida', 'Viva la Vida or Death and All His Friends', '03:45', 'Coldplay', TRUE, 1),
-('Roar', 'Prism', '03:42', 'Katy Perry', TRUE, 2),
-('Say Something', 'Is There Anybody Out There?', '03:53', 'A Great Big World ft. Christina Aguilera', FALSE, 3),
-('All of Me', 'Love in the Future', '04:29', 'John Legend', FALSE, 1),
-('Bohemian Rhapsody', 'A Night at the Opera', '05:55', 'Queen', TRUE, null),
-('Hotel California', 'Hotel California', '06:30', 'Eagles', FALSE, null),
-('Stairway to Heaven', 'Led Zeppelin IV', '08:02', 'Led Zeppelin', TRUE, null),
-('Imagine', 'Imagine', '03:03', 'John Lennon', TRUE, null),
-('Hey Jude', 'Hey Jude', '07:11', 'The Beatles', FALSE, null);
+('Counting Stars', 'Native', '4:17', 'OneRepublic', TRUE, 1),
+('Shape of My Heart', 'Ten Summoners Tales', '4:38', 'Sting', TRUE, 3),
+('Take Me to Church', 'Take Me to Church', '4:02', 'Hozier', FALSE, 2),
+('Viva la Vida', 'Viva la Vida or Death and All His Friends', '3:45', 'Coldplay', TRUE, 1),
+('Roar', 'Prism', '3:42', 'Katy Perry', TRUE, 2),
+('Say Something', 'Is There Anybody Out There?', '3:53', 'A Great Big World ft. Christina Aguilera', FALSE, 3),
+('All of Me', 'Love in the Future', '4:29', 'John Legend', TRUE, 1);

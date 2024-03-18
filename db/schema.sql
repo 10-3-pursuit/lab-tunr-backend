@@ -9,6 +9,13 @@ CREATE TABLE playlists (
     description TEXT
 );
 
+CREATE TABLE albums (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    artist TEXT NOT NULL,
+    year INTEGER
+);
+
 CREATE TABLE songs (
  id SERIAL PRIMARY KEY,
  name TEXT NOT NULL,
@@ -16,5 +23,6 @@ CREATE TABLE songs (
  time TEXT,
  artist TEXT NOT NULL,
  is_favorite BOOLEAN,
- playlist_id INTEGER REFERENCES playlists (id)
+ playlist_id INTEGER REFERENCES playlists (id),
+ album_id INTEGER REFERENCES albums (id)
 );
