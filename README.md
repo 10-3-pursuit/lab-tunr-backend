@@ -14,6 +14,10 @@ Let's make our own music playlist app!
 - `npm install`
 - create a `.env` file based on the example
 
+## Tunr Frontend Link
+
+[Tunr Frontend](https://github.com/BSoto85/lab-tunr-frontend)
+
 ## Multiple Session Lab/Activity
 
 While you will start this lab/activity today, you will have many sessions to build it out.
