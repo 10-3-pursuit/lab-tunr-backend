@@ -11,21 +11,28 @@ const {
     deletePlaylist
  } = require("../queries/playlists");
 
-playlists.get("/", async(_req, res) => {
-    const allPlaylists = await getAllPlaylists();
-    console.log(allPlaylists);
-
-    if (allPlaylists[0]) res.status(200).json(allPlaylists);
-    else res.status(500).json({error: "server error"});
+playlists.get("/", async(req, res) => {
+    const { song_id } = req.params;
+    const allPlaylists = await getAllPlaylists(song_id);
+    const song = await getSongById(song_id);
+    // console.log(song.id)
+    if (song.id) res.status(200).json({ ...song, allPlaylists });
+    else res.status(500).json({error: "Song not found or server error"});
 });
 
+
 playlists.get("/:id", async (req,res) => {
-    const {id } = req.params;
-    const playlist = await getPlaylist(id);
-    if (playlist) {
-        res.json(playlist);
-    } else {
-        res.status(404).json({ error: "not found" });
+try {
+    const { song_id, id } = req.params;
+    const [playlist, song] = await Promise.all([getPlaylist(id), getSongById(song_id)]);
+
+        if (playlist) {
+            res.json({ ...song, playlist });
+        } else {
+            res.status(404).json({ error: "Playlist not found" });
+        }
+    } catch(error) {
+    res.status(500).json({ error: 'Internal server error' });
     }
 });
 

@@ -1,7 +1,17 @@
 const express = require('express');
 const songs = express.Router();
-const { getAllSongs, getSongById, addNewSong, updateSong, deleteSong } = require("../queries/songs");
+const playListController = require("./playListController");
+const { 
+    getAllSongs, 
+    getSongById, 
+    addNewSong, 
+    updateSong, 
+    deleteSong 
+} = require("../queries/songs");
+
 const { checkSong, checkBoolean, checkID } = require("../validations/checkSong");
+
+songs.use('/:song_id/playlists', playListController);
 
 songs.get('/', async(req, res) => {
     // add req.query - 
@@ -31,7 +41,6 @@ songs.get('/:id', async (req, res) => {
 // add new song (create)
 songs.post('/', checkSong, checkBoolean, async (req, res) => {
     try {
-        console.log(req.body); // new song to be added
         const song = await addNewSong(req.body)
         res.json(song)
     } catch (error) {
