@@ -13,19 +13,12 @@ const getAllPlaylists = async (song_id) => {
 
 const getPlaylist = async (id) => {
     try {
-        const song = await db.oneOrNone('SELECT * FROM songs WHERE id = $1;', [id]);
-        if (song) {
-            // Fetch playlists associated with the song
-            const playlists = await db.any('SELECT * FROM playlists WHERE song_id = $1;', [id]);
-            // Add playlists to the song object
-            song.allPlaylists = playlists;
-        }
-        return song;
+        const onePlaylist = await db.oneOrNone("SELECT * FROM playlists WHERE id=$1", [id]);
+        return onePlaylist;
     } catch (error) {
-        throw error;
+        return error;
     }
 };
-
 
 const updatePlaylist = async (playlist) => {
     const { id, name, category, description, song_id } = playlist;

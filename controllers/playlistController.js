@@ -11,11 +11,19 @@ const {
     deletePlaylist
  } = require("../queries/playlists");
 
+// playlists.get("/", async(req, res) => {
+//     const { song_id } = req.params;
+//     const allPlaylists = await getAllPlaylists(song_id);
+//     const song = await getSongById(song_id);
+//     if (song.id) res.status(200).json({ ...song, allPlaylists });
+//     else res.status(500).json({error: "Song not found or server error"});
+// });
+
 playlists.get("/", async(req, res) => {
     const { song_id } = req.params;
-    const allPlaylists = await getAllPlaylists(song_id);
-    const song = await getSongById(song_id);
-    // console.log(song.id)
+    const [allPlaylists, song] = await Promise.all(
+       [getAllPlaylists(song_id), getSongById(song_id)] 
+    )
     if (song.id) res.status(200).json({ ...song, allPlaylists });
     else res.status(500).json({error: "Song not found or server error"});
 });
@@ -27,7 +35,9 @@ try {
     const [playlist, song] = await Promise.all([getPlaylist(id), getSongById(song_id)]);
 
         if (playlist) {
-            res.json({ ...song, playlist });
+            if (song.id === playlist.song_id) {
+            res.json({ ...song, playlist })
+            }
         } else {
             res.status(404).json({ error: "Playlist not found" });
         }
