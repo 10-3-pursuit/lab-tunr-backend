@@ -8,12 +8,14 @@ const app = express();
 
 const songsController = require("./controllers/songController.js");
 
+const playlistsController = require("./controllers/playlistController.js");
+
 app.use(cors());
 app.use(express.json());
 
 // controller middleware
 app.use("/api/songs", songsController);
-
+app.use("/api/playlists", playlistsController);
 // ROUTES
 app.get("/", (req, res) => {
   res.send("Welcome to Bookmarks App");
