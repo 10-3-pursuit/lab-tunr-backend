@@ -5,6 +5,7 @@ const {
     getAllPlaylists,
     getPlaylist,
     updatePlaylist,
+    createPlaylist,
  } = require("../queries/playlists");
 
 playlists.get("/", async(_req, res) => {
@@ -34,6 +35,15 @@ playlists.put("/:id", async (req, res) => {
         res.status(200).json(updatedPlaylist);
     } catch (error) {
         res.status(500).json({ error: "Failed to update playlist" });
+    }
+});
+
+playlists.post("/", async(req, res) => {
+    try {
+        const playlist = await createPlaylist(req.body);
+        res.json(playlist);
+    } catch (error) {
+        res.status(400).json({ error });
     }
 });
 
