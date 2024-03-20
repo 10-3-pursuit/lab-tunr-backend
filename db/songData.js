@@ -1,5 +1,5 @@
 // data should look like this in browser when typing http://localhost:3003/api/songs
-[
+data = [
     {
     "id": 1,
     "name": "Get Lucky",
