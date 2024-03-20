@@ -1,5 +1,7 @@
 const express = require('express');
-const playlists = express.Router();
+const playlists = express.Router({ mergeParams: true });
+
+const { getSongById } = require("../queries/songs.js");
 
 const { 
     getAllPlaylists,

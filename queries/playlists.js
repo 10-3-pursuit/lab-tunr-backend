@@ -1,6 +1,6 @@
 const db = require('../db/dbConfig');
 
-const getAllPlaylists = async () => { // params order / is_fave
+const getAllPlaylists = async () => {
     try {
         const allPlaylists = await db.any('SELECT * FROM playlists;')
         console.log(allPlaylists);
