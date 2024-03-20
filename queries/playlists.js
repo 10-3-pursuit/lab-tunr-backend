@@ -2,9 +2,7 @@ const db = require('../db/dbConfig');
 
 const getAllPlaylists = async () => { // params order / is_fave
     try {
-        // conditionals for asc
-        // sql
-        const allPlaylists = await db.any('SELECT * FROM playlists;') // add order by asc (add column)
+        const allPlaylists = await db.any('SELECT * FROM playlists;')
         console.log(allPlaylists);
         return allPlaylists;
     } catch (error) {
@@ -21,7 +19,34 @@ const getPlaylist = async (id) => {
     }
 }
 
+const updatePlaylist = async (playlist) => {
+    const { id, name, category, description, song_id } = playlist;
+    try {
+        const updatedPlaylist = await db.one(
+            "UPDATE playlists SET name=$1, category=$2, description=$3, song_id=$4 WHERE id=$5 RETURNING *",
+            [name, category, description, song_id, id]
+        );
+        return updatedPlaylist;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const createPlaylist = async (playlist) => {
+    const { name, category, description, song_id } = playlist;
+    try {
+        const newPlaylist = await db.one(
+            "INSERT INTO playlists (name, category, description, song_id) VALUES($1,$2,$3,$4) RETURNING *",[name, category, description, song_id]
+        );
+        return newPlaylist;
+    } catch (error) {
+        return error;
+    }
+};
+
 module.exports={
     getAllPlaylists,
     getPlaylist,
+    updatePlaylist,
+    createPlaylist,
 };
