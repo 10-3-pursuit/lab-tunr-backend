@@ -6,6 +6,7 @@ const {
     getPlaylist,
     updatePlaylist,
     createPlaylist,
+    deletePlaylist
  } = require("../queries/playlists");
 
 playlists.get("/", async(_req, res) => {
@@ -44,6 +45,16 @@ playlists.post("/", async(req, res) => {
         res.json(playlist);
     } catch (error) {
         res.status(400).json({ error });
+    }
+});
+
+playlists.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const deletedPlaylist = await deletePlaylist(id);
+    if(deletedPlaylist.id) {
+        res.status(200).json(deletedPlaylist);
+    } else {
+        res.status(404).json("Playlist not found");
     }
 });
 

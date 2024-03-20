@@ -44,9 +44,20 @@ const createPlaylist = async (playlist) => {
     }
 };
 
+const deletePlaylist = async (id) => {
+    try {
+        const deletedPlaylist = await db.one("DELETE FROM playlists WHERE id = $1 RETURNING *", id
+        );
+        return deletedPlaylist;
+    } catch (error) {
+        return error;
+    }
+};
+
 module.exports={
     getAllPlaylists,
     getPlaylist,
     updatePlaylist,
     createPlaylist,
+    deletePlaylist
 };
