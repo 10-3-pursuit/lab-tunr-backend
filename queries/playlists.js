@@ -1,11 +1,17 @@
-const db = require("../db/dbConfig.js");
+const db = require('../db/dbConfig');
 
-const getAllPlaylists = async () => {
+const getAllPlaylists = async () => { // params order / is_fave
     try {
-      const allPlaylists = await db.any("SELECT * FROM playlists");
-      return allPlaylists;
+        // conditionals for asc
+        // sql
+        const allPlaylists = await db.any('SELECT * FROM playlists;') // add order by asc (add column)
+        console.log(allPlaylists);
+        return allPlaylists;
     } catch (error) {
-      return error;
+        return error
     }
-  };
-  
+};
+
+module.exports={
+    getAllPlaylists,
+};
