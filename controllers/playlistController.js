@@ -57,12 +57,9 @@ playlists.put("/:id", async (req, res) => {
 });
 
 playlists.post("/", async(req, res) => {
-    try {
-        const playlist = await createPlaylist(req.body);
-        res.json(playlist);
-    } catch (error) {
-        res.status(400).json({ error });
-    }
+        const { song_id } = req.params;
+        const playlist = await createPlaylist({ ...req.body, song_id });
+        res.status(200).json(playlist);
 });
 
 playlists.delete("/:id", async (req, res) => {

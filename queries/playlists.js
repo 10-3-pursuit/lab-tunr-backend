@@ -34,10 +34,15 @@ const updatePlaylist = async (playlist) => {
 };
 
 const createPlaylist = async (playlist) => {
-    const { name, category, description, song_id } = playlist;
     try {
         const newPlaylist = await db.one(
-            "INSERT INTO playlists (name, category, description, song_id) VALUES($1,$2,$3,$4) RETURNING *",[name, category, description, song_id]
+            "INSERT INTO playlists (name, category, description, song_id) VALUES($1, $2, $3,$4) RETURNING *",
+            [
+                playlist.name, 
+                playlist.category, 
+                playlist.description, 
+                playlist.song_id
+            ]
         );
         return newPlaylist;
     } catch (error) {
