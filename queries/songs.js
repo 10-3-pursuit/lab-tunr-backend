@@ -84,10 +84,35 @@ const deleteSong = async (id) => {
   }
 };
 
+const setPlaylist_IdToNull = async (playlist_id) => {
+  try {
+    const updatedSong = await db.none(
+      "UPDATE songs SET playlist_id=NULL WHERE playlist_id=$1 RETURNING *",
+      playlist_id
+    );
+  } catch (error) {
+    return error;
+  }
+};
+
+const getAllPlaylistSongs = async (playlist_id) => {
+  try {
+    const allPlaylistSongs = await db.any(
+      "SELECT * FROM songs WHERE playlist_id=$1",
+      playlist_id
+    );
+    return allPlaylistSongs;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   getAllSongs,
   getSong,
   createSong,
   updateSong,
   deleteSong,
+  setPlaylist_IdToNull,
+  getAllPlaylistSongs,
 };
