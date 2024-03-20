@@ -1,8 +1,10 @@
 const db = require('../db/dbConfig');
 
-const getAllSongs = async () => {
+const getAllSongs = async () => { // params order / is_fave
     try {
-        const allSongs = await db.any('SELECT * FROM songs;')
+        // conditionals for asc
+        // sql
+        const allSongs = await db.any('SELECT * FROM songs;') // add order by asc (add column)
         return allSongs;
     } catch (error) {
         return error

@@ -4,6 +4,9 @@ const { getAllSongs, getSongById, addNewSong, updateSong, deleteSong } = require
 const { checkSong, checkBoolean, checkID } = require("../validations/checkSong");
 
 songs.get('/', async(req, res) => {
+    // add req.query - 
+    // pass keys as prop
+    // order / is_favorite
     const allSongs = await getAllSongs()
     if(allSongs[0]) res.status(200).json(allSongs);
     else res.status(500).json({ error: 'server error' });
@@ -48,7 +51,7 @@ songs.put('/:id', checkID, async (req, res) => {
     }
 });
 
-songs.delete("/:id", checkID, async (req, res) => {
+songs.delete("/:id", async (req, res) => {
     const { id } = req.params;
     const deletedSong = await deleteSong(id);
     if (deletedSong.id) {
