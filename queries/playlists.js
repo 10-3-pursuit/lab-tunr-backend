@@ -12,6 +12,16 @@ const getAllPlaylists = async () => { // params order / is_fave
     }
 };
 
+const getPlaylist = async (id) => {
+    try {
+        const onePlaylist = await db.one("SELECT * FROM playlists WHERE id=$1", id);
+        return onePlaylist;
+    } catch (error) {
+        return error;
+    }
+}
+
 module.exports={
     getAllPlaylists,
+    getPlaylist,
 };
