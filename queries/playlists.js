@@ -25,11 +25,11 @@ const getPlaylist = async (id) => {
   }
 
 // UPDATE
-const updatePlaylist = async (playlist) => {
+const updatePlaylist = async (id, playlist) => {
   try {
     const updatedPlaylist = await db.one(
       "UPDATE playlists SET name=$1, description=$2 WHERE id=$3 RETURNING *",
-      [playlist.name, playlist.description, playlist.id ]
+      [playlist.name, playlist.description, id ]
     );
     return updatedPlaylist;
   } catch (error) {

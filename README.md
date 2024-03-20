@@ -1,4 +1,5 @@
 # Tunr Full Stack Application
+FRONT END REPO LINK: https://github.com/AnitaOwen/lab-tunr-frontend
 
 Let's make our own music playlist app!
 

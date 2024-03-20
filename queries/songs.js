@@ -3,7 +3,7 @@ const db = require('../db/dbConfig')
 // INDEX
 const getAllSongs = async (playlist_id) => {
     try {
-        const songs = await db.any('SELECT * FROM songs WHERE playlist_id=$1', id)
+        const songs = await db.any('SELECT * FROM songs WHERE playlist_id=$1', playlist_id)
         return songs
     } catch (error) {
         return error
@@ -21,11 +21,11 @@ const getSong = async (id) => {
 }
 
 // CREATE
-const createSong = async ({ name, album, time, artist, is_favorite }) => {
+const createSong = async (song) => {
     try {
         const newSong = await db.one(
-            'INSERT INTO songs (name, album, time, artist, is_favorite) VALUES($1, $2, $3, $4, $5) RETURNING *', 
-            [name, album, time, artist, is_favorite])
+            'INSERT INTO songs (name, album, time, artist, is_favorite, playlist_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', 
+            [song.name, song.album, song.time, song.artist, song.is_favorite, song.playlist_id])
             return newSong
     } catch(error) {
         return error
@@ -33,12 +33,11 @@ const createSong = async ({ name, album, time, artist, is_favorite }) => {
 }
 
 // UPDATE
-const updateSong = async (id, song) => {
-    const { name, album, time, artist, is_favorite } = song
+const updateSong = async (song) => {
     try{
         const updatedSong = await db.one(
-            'UPDATE songs SET name=$1, album=$2, time=$3, artist=$4, is_favorite=$5 WHERE id=$6 RETURNING *',
-            [name, album, time, artist, is_favorite, id]
+            'UPDATE songs SET name=$1, album=$2, time=$3, artist=$4, is_favorite=$5, playlist_id=$6 WHERE id=$7 RETURNING *',
+            [song.name, song.album, song.time, song.artist, song.is_favorite, song.playlist_id, song.id]
         )
         return updatedSong
     } catch(error){
@@ -95,35 +94,6 @@ const getNotFavoriteSongs = async () => {
     }
 }
 
-// PLAYLIST SONGS QUERIES
-const getAllPlaylistSongs = async (id) => {
-    try {
-        const matchingSongs = await db.any('SELECT * FROM songs WHERE playlist_id=$1', id)
-        return matchingSongs
-    } catch (err) {
-      return err
-    }
-}
-
-const updateSongsPlaylistIdToNull = async (playlist_id) => {
-    try {
-        await db.none('UPDATE songs SET playlist_id = NULL WHERE playlist_id = $1', playlist_id);
-        return true; // Return true to indicate successful update
-    } catch (error) {
-        return false; // Return false if update fails
-    }
-};
-
-// const updatePlaylistSong = async (song_id) => {
-//     try{
-//         await db.none('UPDATE songs SET playlist_id = NULL WHERE id = $1', song_id)
-//         return true
-//     } catch (error) {
-//         return false
-//     }
-// }
-
-
 module.exports = { 
     getAllSongs, 
     getSong, 
@@ -134,7 +104,4 @@ module.exports = {
     orderByDesc, 
     getFavoriteSongs, 
     getNotFavoriteSongs,
-    getAllPlaylistSongs,
-    updateSongsPlaylistIdToNull, 
-    // updatePlaylistSong
 }

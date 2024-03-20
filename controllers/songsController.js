@@ -19,14 +19,7 @@ const {
     checkBoolean
 } = require('../validations/checkSongs.js')
 
-
 // INDEX
-// songs.get('/', async (req, res) => {
-//     const allSongs = await getAllSongs()
-//     if (allSongs[0]) res.status(200).json(allSongs)
-//     else res.status(500).json({ error: "server error" })
-// })
-
 songs.get('/', async (req, res) => {
     const { order, is_favorite } = req.query
     const { playlist_id } = req.params
@@ -89,15 +82,6 @@ songs.put('/:id', checkNameArtist, checkBoolean, async (req, res) => {
     else res.status(400).json({ error: "Song not found." })
 })
 
-// songs.put('/:id/remove', async (req, res) => {
-//     const {id} = req.params
-//     if(id){
-//         const updatedSong = await updatePlaylistSong(id)
-//         res.status(200).json(updatedSong) 
-//     } else {
-//         res.status(400).json({ error })
-//     }
-// })
 
 // DELETE
 songs.delete('/:id', async (req, res) => {
