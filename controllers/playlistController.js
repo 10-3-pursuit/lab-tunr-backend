@@ -47,14 +47,12 @@ try {
 });
 
 playlists.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const { name, category, description, song_id } = req.body;
-
-    try {
-        const updatedPlaylist = await updatePlaylist({ id, name, category, description, song_id });
+    const { song_id, id } = req.params;
+    const updatedPlaylist = await updatePlaylist({ id, ...req.body, song_id });
+    if (updatedPlaylist) {
         res.status(200).json(updatedPlaylist);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to update playlist" });
+    } else {
+        res.status(404).json("Playlist not found")
     }
 });
 
