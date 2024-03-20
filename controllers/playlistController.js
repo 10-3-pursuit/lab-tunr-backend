@@ -11,14 +11,6 @@ const {
     deletePlaylist
  } = require("../queries/playlists");
 
-// playlists.get("/", async(req, res) => {
-//     const { song_id } = req.params;
-//     const allPlaylists = await getAllPlaylists(song_id);
-//     const song = await getSongById(song_id);
-//     if (song.id) res.status(200).json({ ...song, allPlaylists });
-//     else res.status(500).json({error: "Song not found or server error"});
-// });
-
 playlists.get("/", async(req, res) => {
     const { song_id } = req.params;
     const [allPlaylists, song] = await Promise.all(

@@ -7,14 +7,13 @@ const app = express();
 // controller imports
 
 const songsController = require("./controllers/songController.js");
-// const playlistController = require("./controllers/playListController.js");
+
 
 app.use(cors());
 app.use(express.json());
 
 // controller middleware
 app.use("/api/songs", songsController);
-// app.use("/api/playlists", playlistController);
 
 // ROUTES
 app.get("/", (req, res) => {
