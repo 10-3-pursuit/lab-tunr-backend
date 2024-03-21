@@ -9,14 +9,6 @@ INSERT INTO songs (name, artist, album, time, is_favorite) VALUES
 
 -- Seed data for playlists
 
--- INSERT INTO playlists (name, category, description, song_id) VALUES
--- ('Chill Vibes', 'Chill', 'Relaxing tunes for a laid-back mood', 1), -- 'Get Lucky'
--- ('Chill Vibes', 'Chill','Relaxing tunes for a laid-back mood', 2), -- 'No More Drama
--- ('90s Throwback', 'Classic 90s','90s hits','Classic hits from the 90s era', 2),
--- ('90s Throwback', 'Classic 90s','Classic hits from the 90s era', 3), -- 'Shoop'
--- ('Hip Hop Jams', 'Hip-Hop','The hottest tracks in hip hop', 3),
--- ('Funky Grooves', 'Electronic', 'Get down with some funky beats', 4),
--- ('Reggae Rhythms', 'Reggae','Feel the vibes with reggae music', 5);
 INSERT INTO playlists (name, category, description, song_id) 
 VALUES
 ('Chill Vibes', 'Chill','Relaxing tunes for a laid-back mood', 2), -- 'No More Drama'
